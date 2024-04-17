@@ -13,26 +13,35 @@ function getComputerChoice() {
 }
 
 function playRound(playerSelection, computerSelection) {
-    PlayerSelection = (playerSelection.substring(0, 1).toUpperCase() + playerSelection.substr(1).toLowerCase()).replace( /\s/g, '')
+    playerSelection = (playerSelection.substring(0, 1).toUpperCase() + playerSelection.substr(1).toLowerCase()).replace( /\s/g, '')
 
     // Winning conditions for the player
-    if (PlayerSelection === "Rock" && computerSelection === "Scissors" 
-        || PlayerSelection === "Paper" && computerSelection === "Rock"
-        || PlayerSelection === "Scissors" && computerSelection === "Paper") {
-            return `You won! You chose ${PlayerSelection}, which beats ${computerSelection}`
+    if (playerSelection === "Rock" && computerSelection === "Scissors" 
+        || playerSelection === "Paper" && computerSelection === "Rock"
+        || playerSelection === "Scissors" && computerSelection === "Paper") {
+            return `You won! You chose ${playerSelection}, which beats ${computerSelection}`
         } 
 
     // Winning conditions for the computer
-        else if (PlayerSelection === "Rock" && computerSelection === "Paper" 
-        || PlayerSelection === "Paper" && computerSelection === "Scissors"
-        || PlayerSelection === "Scissors" && computerSelection === "Rock") {
-            return `You lose! The computer picked ${computerSelection}, which beats ${PlayerSelection}.`
+        else if (playerSelection === "Rock" && computerSelection === "Paper" 
+        || playerSelection === "Paper" && computerSelection === "Scissors"
+        || playerSelection === "Scissors" && computerSelection === "Rock") {
+            return `You lose! The computer picked ${computerSelection}, which beats ${playerSelection}.`
         }
 
     // Returns an invalid string if playerSelection is not eligible
         else {
-            return `Are you sure that's a valid move? ${PlayerSelection} isn't rock, paper, or scissors!`
+            return `Are you sure that's a valid move? ${playerSelection} isn't rock, paper, or scissors!`
         }
 }
 
-console.log(playRound("Rock", "Paper"))
+function playGame() {
+    for (let i = 0; i < 5; i++) {
+        playerInput = prompt("Rock, Paper, or Scissors?");
+        computerInput = getComputerChoice();
+
+        console.log(playRound(playerInput, computerInput))
+    }
+}
+
+playGame()
