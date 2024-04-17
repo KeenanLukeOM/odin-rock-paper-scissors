@@ -28,11 +28,11 @@ function playRound(playerSelection, computerSelection) {
         || PlayerSelection === "Scissors" && computerSelection === "Rock") {
             return `You lose! The computer picked ${computerSelection}, which beats ${PlayerSelection}.`
         }
+
+    // Returns an invalid string if playerSelection is not eligible
         else {
             return `Are you sure that's a valid move? ${PlayerSelection} isn't rock, paper, or scissors!`
         }
-
 }
-
 
 console.log(playRound("Rock", "Paper"))
