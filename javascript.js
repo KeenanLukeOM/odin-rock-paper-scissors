@@ -1,5 +1,11 @@
 "Use strict";
 
+let playerScore = 0;
+let computerScore = 0;
+
+let playerScoreTracker = document.querySelector("#playerScore")
+let computerScoreTracker = document.querySelector("#computerScore")
+
 function getComputerChoice() {
     let rand = Math.floor(Math.random() * 3)
 
@@ -19,6 +25,8 @@ function playRound(playerSelection, computerSelection) {
     if (playerSelection === "Rock" && computerSelection === "Scissors" 
         || playerSelection === "Paper" && computerSelection === "Rock"
         || playerSelection === "Scissors" && computerSelection === "Paper") {
+            playerScore = playerScore + 1
+            playerScoreTracker.textContent = `Player: ${playerScore}`
             return `You won! You chose ${playerSelection}, which beats ${computerSelection}`
         } 
 
@@ -26,7 +34,16 @@ function playRound(playerSelection, computerSelection) {
         else if (playerSelection === "Rock" && computerSelection === "Paper" 
         || playerSelection === "Paper" && computerSelection === "Scissors"
         || playerSelection === "Scissors" && computerSelection === "Rock") {
+            computerScore = computerScore + 1
+            computerScoreTracker.textContent = `Computer: ${computerScore}`
             return `You lose! The computer picked ${computerSelection}, which beats ${playerSelection}.`
+        }
+
+    // Returns the tie condition
+        else if (playerSelection === "Rock" && computerSelection === "Rock" 
+        || playerSelection === "Paper" && computerSelection === "Paper"
+        || playerSelection === "Scissors" && computerSelection === "Scissors") {
+            return `You tied! Both you and the computer chose ${computerSelection}!`
         }
 
     // Returns an invalid string if playerSelection is not eligible
@@ -35,13 +52,58 @@ function playRound(playerSelection, computerSelection) {
         }
 }
 
-function playGame() {
-    for (let i = 0; i < 5; i++) {
-        playerInput = prompt("Rock, Paper, or Scissors?");
-        computerInput = getComputerChoice();
+let buttons = document.querySelectorAll("button")
+let resultContainer = document.querySelector("#resultContainer")
+let round = document.querySelector("#round")
+let roundTotal = 0
 
-        console.log(playRound(playerInput, computerInput))
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        playGame(button.id)
+    })
+})
+
+function playGame(input) {
+    // Creates required elements
+    const resultText = document.createElement("p")
+    const finalResultText = document.createElement("p")
+    finalResultText.style.fontWeight = "Bolder"
+
+    // Takes input and generates computer choice
+    playerInput = input
+    console.log(playerInput)
+    computerInput = getComputerChoice();
+
+    // Plays the round
+    let result = playRound(playerInput, computerInput)
+
+    // Displays result
+    resultText.textContent = result
+    resultContainer.appendChild(resultText)
+
+    // Adds one to round total
+    roundTotal = roundTotal + 1
+    round.textContent = `Current round: ${roundTotal}`
+
+    // Displays a final score if a player reaches 5 wins
+    if (playerScore === 5) {
+        finalResultText.textContent = `Congratulations! You've taken the win against the computer. ${playerScore} to ${computerScore}, to be exact!`
+        resultContainer.appendChild(finalResultText)
+    } else if (computerScore === 5) {
+        finalResultText.textContent = `Ouch! The computer takes the win. ${computerScore} to ${playerScore}. You hate to see it.`
     }
-}
+};
 
-playGame()
+
+
+// Plays five games
+
+// function playGame() {
+//     for (let i = 0; i < 5; i++) {
+//         playerInput = prompt("Rock, Paper, or Scissors?");
+//         computerInput = getComputerChoice();
+
+//         console.log(playRound(playerInput, computerInput))
+//     }
+// }
+

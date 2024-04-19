@@ -1,0 +1,13 @@
+#roundContainer {
+    display: flex;
+    justify-content: space-around;
+}
+
+#buttonContainer {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    margin: 14px;
+}
